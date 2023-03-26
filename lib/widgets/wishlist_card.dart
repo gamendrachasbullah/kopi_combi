@@ -23,7 +23,7 @@ class WishlistCard extends StatelessWidget {
           ClipRRect(
             borderRadius: BorderRadius.circular(12),
             child: Image.asset(
-              'assets/image_shoes.png',
+              'assets/kopi_kombi1.png',
               width: 60,
             ),
           ),
@@ -35,13 +35,13 @@ class WishlistCard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'Terrex Urban Low',
+                  'Kopi Kombi Original',
                   style: primaryTextStyle.copyWith(
                     fontWeight: semibold,
                   ),
                 ),
                 Text(
-                  '\$143,98',
+                  'Rp. 60.000',
                   style: priceTextStyle,
                 )
               ],

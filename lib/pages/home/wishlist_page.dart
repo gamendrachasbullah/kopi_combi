@@ -10,7 +10,11 @@ class WishlistPage extends StatelessWidget {
         backgroundColor: backgroundColor1,
         centerTitle: true,
         title: Text(
-          'Favorite Shoes',
+          'Kopi Favorit',
+          style: primaryTextStyle.copyWith(
+            fontSize: 18,
+            fontWeight: medium,
+          ),
         ),
         elevation: 0,
         automaticallyImplyLeading: false,
@@ -33,7 +37,7 @@ class WishlistPage extends StatelessWidget {
                 height: 23,
               ),
               Text(
-                'You don\'t have dream shoes ?',
+                'Kamu ingin cari kopi ?',
                 style: primaryTextStyle.copyWith(
                   fontSize: 16,
                   fontWeight: medium,
@@ -43,7 +47,7 @@ class WishlistPage extends StatelessWidget {
                 height: 12,
               ),
               Text(
-                'Let\'s find your favorite shoes',
+                'Ayo temukan kopi kesukaan kamu',
                 style: secondaryTextStyle,
               ),
               SizedBox(
@@ -64,10 +68,11 @@ class WishlistPage extends StatelessWidget {
                     ),
                   ),
                   child: Text(
-                    'Explore Store',
+                    'Cari Sekarang',
                     style: primaryTextStyle.copyWith(
                       fontSize: 16,
                       fontWeight: medium,
+                      color: backgroundColor1,
                     ),
                   ),
                 ),
@@ -99,7 +104,7 @@ class WishlistPage extends StatelessWidget {
       children: [
         header(),
         //emptyWishlist(),
-        content(),
+        emptyWishlist(),
       ],
     );
   }

@@ -37,7 +37,7 @@ class ChatPage extends StatelessWidget {
                 height: 20,
               ),
               Text(
-                'Opss no message yet ?',
+                'Hubungi Admin',
                 style: primaryTextStyle.copyWith(
                   fontSize: 16,
                   fontWeight: medium,
@@ -47,7 +47,7 @@ class ChatPage extends StatelessWidget {
                 height: 12,
               ),
               Text(
-                'You have never done a transaction',
+                'Chat Admin, Apabila ada pertanyaan',
                 style: secondaryTextStyle,
               ),
               SizedBox(
@@ -68,10 +68,11 @@ class ChatPage extends StatelessWidget {
                     ),
                   ),
                   child: Text(
-                    'Explore Store',
+                    'WhatsApp',
                     style: primaryTextStyle.copyWith(
                       fontSize: 16,
                       fontWeight: medium,
+                      color: backgroundColor1,
                     ),
                   ),
                 ),

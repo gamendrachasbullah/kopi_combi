@@ -262,6 +262,7 @@ class SignUpPage extends StatelessWidget {
             style: primaryTextStyle.copyWith(
               fontSize: 16,
               fontWeight: medium,
+              color: backgroundColor1,
             ),
           ),
         ),

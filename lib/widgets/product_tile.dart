@@ -19,7 +19,7 @@ class ProductTile extends StatelessWidget {
             ClipRRect(
               borderRadius: BorderRadius.circular(20),
               child: Image.asset(
-                'assets/image_shoes.png',
+                'assets/kopi_kombi2.png',
                 width: 120,
                 height: 120,
                 fit: BoxFit.cover,
@@ -33,7 +33,7 @@ class ProductTile extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'Football',
+                  'Arabika',
                   style: secondaryTextStyle.copyWith(
                     fontSize: 12,
                   ),
@@ -42,7 +42,7 @@ class ProductTile extends StatelessWidget {
                   height: 6,
                 ),
                 Text(
-                  'Predator 20.30 Firm Ground',
+                  'Kopi Kombi Fermentation',
                   style: primaryTextStyle.copyWith(
                     fontSize: 16,
                     fontWeight: semibold,
@@ -52,7 +52,7 @@ class ProductTile extends StatelessWidget {
                   height: 6,
                 ),
                 Text(
-                  '\$ 68,47',
+                  'Rp. 60.000',
                   style: priceTextStyle.copyWith(
                     fontWeight: medium,
                   ),

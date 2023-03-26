@@ -20,14 +20,14 @@ class HomePage extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'Hallo, Alex',
+                    'Hallo, Maulana',
                     style: primaryTextStyle.copyWith(
                       fontSize: 24,
                       fontWeight: semibold,
                     ),
                   ),
                   Text(
-                    '@alexkeinn',
+                    '@maulana99',
                     style: subtitleTextStyle.copyWith(
                       fontSize: 16,
                     ),
@@ -73,10 +73,11 @@ class HomePage extends StatelessWidget {
                   color: primaryColor,
                 ),
                 child: Text(
-                  'All Shoes',
+                  'Semua Kopi',
                   style: primaryTextStyle.copyWith(
                     fontSize: 13,
                     fontWeight: medium,
+                    color: backgroundColor1,
                   ),
                 ),
               ),
@@ -94,7 +95,7 @@ class HomePage extends StatelessWidget {
                   color: transparentColor,
                 ),
                 child: Text(
-                  'Running',
+                  'Arabica',
                   style: subtitleTextStyle.copyWith(
                     fontSize: 13,
                     fontWeight: medium,
@@ -115,7 +116,7 @@ class HomePage extends StatelessWidget {
                   color: transparentColor,
                 ),
                 child: Text(
-                  'Training',
+                  'Robusta',
                   style: subtitleTextStyle.copyWith(
                     fontSize: 13,
                     fontWeight: medium,
@@ -136,7 +137,7 @@ class HomePage extends StatelessWidget {
                   color: transparentColor,
                 ),
                 child: Text(
-                  'Basketball',
+                  'Liberica',
                   style: subtitleTextStyle.copyWith(
                     fontSize: 13,
                     fontWeight: medium,
@@ -157,7 +158,7 @@ class HomePage extends StatelessWidget {
                   color: transparentColor,
                 ),
                 child: Text(
-                  'Hiking',
+                  'Excelsa',
                   style: subtitleTextStyle.copyWith(
                     fontSize: 13,
                     fontWeight: medium,
@@ -178,7 +179,7 @@ class HomePage extends StatelessWidget {
           right: defaultMargin,
         ),
         child: Text(
-          'Popular Products',
+          'Poroduk Terlaris',
           style: primaryTextStyle.copyWith(
             fontSize: 22,
             fontWeight: semibold,
@@ -218,7 +219,7 @@ class HomePage extends StatelessWidget {
           right: defaultMargin,
         ),
         child: Text(
-          'New Arrivals',
+          'Produk Baru',
           style: primaryTextStyle.copyWith(
             fontSize: 22,
             fontWeight: semibold,

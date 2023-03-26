@@ -15,17 +15,6 @@ class _MainPageState extends State<MainPage> {
 
   @override
   Widget build(BuildContext context) {
-    Widget cartButton() {
-      return FloatingActionButton(
-        onPressed: () {},
-        backgroundColor: secondaryColor,
-        child: Image.asset(
-          'assets/icon_cart.png',
-          width: 20,
-        ),
-      );
-    }
-
     Widget customBottomNav() {
       return ClipRRect(
         borderRadius: BorderRadius.vertical(
@@ -121,7 +110,6 @@ class _MainPageState extends State<MainPage> {
 
     return Scaffold(
       backgroundColor: currentIndex == 0 ? backgroundColor1 : backgroundColor3,
-      floatingActionButton: cartButton(),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       bottomNavigationBar: customBottomNav(),
       body: body(),

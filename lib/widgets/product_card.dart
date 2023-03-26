@@ -25,7 +25,7 @@ class ProductCard extends StatelessWidget {
               height: 30,
             ),
             Image.asset(
-              'assets/image_shoes.png',
+              'assets/kopi_kombi1.png',
               width: 215,
               height: 150,
               fit: BoxFit.cover,
@@ -38,7 +38,7 @@ class ProductCard extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'Hiking',
+                    'Arabika',
                     style: secondaryTextStyle.copyWith(
                       fontSize: 12,
                     ),
@@ -47,7 +47,7 @@ class ProductCard extends StatelessWidget {
                     height: 6,
                   ),
                   Text(
-                    'COURT VISION 2.0',
+                    'Kopi Combi Original',
                     style: blackTextStyle.copyWith(
                       fontSize: 18,
                       fontWeight: semibold,
@@ -58,7 +58,7 @@ class ProductCard extends StatelessWidget {
                     height: 6,
                   ),
                   Text(
-                    '\$58,67',
+                    'Rp. 60.000',
                     style: priceTextStyle.copyWith(
                       fontSize: 14,
                       fontWeight: medium,
