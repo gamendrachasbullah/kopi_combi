@@ -1,0 +1,68 @@
+{
+  "project_info": {
+    "project_number": "895440986695",
+    "project_id": "kopicombi",
+    "storage_bucket": "kopicombi.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:895440986695:android:424f9343a5c516d9724762",
+        "android_client_info": {
+          "package_name": "com.example.kopi_combi"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "895440986695-5i5u3r4rljie2jta5ttsmhrj04vlnppu.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBJr8EFs8ZEpVu5mKETTGwm-GbCZOmJlmQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "895440986695-5i5u3r4rljie2jta5ttsmhrj04vlnppu.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:895440986695:android:de4260fcde30f9c9724762",
+        "android_client_info": {
+          "package_name": "com.example.my_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "895440986695-5i5u3r4rljie2jta5ttsmhrj04vlnppu.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBJr8EFs8ZEpVu5mKETTGwm-GbCZOmJlmQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "895440986695-5i5u3r4rljie2jta5ttsmhrj04vlnppu.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
