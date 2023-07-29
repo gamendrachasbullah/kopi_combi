@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:kopi_combi/theme.dart';
-import 'package:kopi_combi/widgets/chat_tile.dart';
 
 class ChatPage extends StatelessWidget {
+  const ChatPage({super.key});
+
   @override
   Widget build(BuildContext context) {
     Widget header() {
@@ -53,7 +54,7 @@ class ChatPage extends StatelessWidget {
               SizedBox(
                 height: 20,
               ),
-              Container(
+              SizedBox(
                 height: 44,
                 child: TextButton(
                   onPressed: () {},
@@ -77,23 +78,6 @@ class ChatPage extends StatelessWidget {
                   ),
                 ),
               )
-            ],
-          ),
-        ),
-      );
-    }
-
-    Widget content() {
-      return Expanded(
-        child: Container(
-          width: double.infinity,
-          color: backgroundColor3,
-          child: ListView(
-            padding: EdgeInsets.symmetric(
-              horizontal: defaultMargin,
-            ),
-            children: [
-              ChatTile(),
             ],
           ),
         ),

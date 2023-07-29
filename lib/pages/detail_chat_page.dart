@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:kopi_combi/theme.dart';
 
 class DetailChatPage extends StatelessWidget {
+  const DetailChatPage({super.key});
+
   @override
   Widget build(BuildContext context) {
     PreferredSize header() {

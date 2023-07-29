@@ -1,17 +1,31 @@
 import 'package:flutter/material.dart';
-import 'package:kopi_combi/pages/home/chat_page.dart';
+// import 'package:kopi_combi/pages/home/chat_page.dart';
+import 'package:kopi_combi/pages/home/checkout_page.dart';
 import 'package:kopi_combi/pages/home/home_page.dart';
 import 'package:kopi_combi/pages/home/profile_page.dart';
 import 'package:kopi_combi/pages/home/wishlist_page.dart';
 import 'package:kopi_combi/theme.dart';
 
 class MainPage extends StatefulWidget {
+  final int? currentIndex;
+  const MainPage({Key? key, this.currentIndex}) : super(key: key);
+
   @override
   State<MainPage> createState() => _MainPageState();
 }
 
 class _MainPageState extends State<MainPage> {
   int currentIndex = 0;
+
+  @override
+  void initState() {
+    if (widget.currentIndex != null) {
+      setState(() {
+        currentIndex = widget.currentIndex!;
+      });
+    }
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +42,7 @@ class _MainPageState extends State<MainPage> {
             backgroundColor: backgroundColor4,
             currentIndex: currentIndex,
             onTap: (value) {
-              print(value);
+              debugPrint('$value');
               setState(() {
                 currentIndex = value;
               });
@@ -50,7 +64,8 @@ class _MainPageState extends State<MainPage> {
                 icon: Container(
                   margin: EdgeInsets.only(top: 20, bottom: 10),
                   child: Image.asset(
-                    'assets/icon_chat.png',
+                    'assets/icon_cart.png',
+                    // 'assets/icon_chat.png',
                     width: 20,
                     color: currentIndex == 1 ? primaryColor : Color(0xff808191),
                   ),
@@ -89,19 +104,16 @@ class _MainPageState extends State<MainPage> {
       switch (currentIndex) {
         case 0:
           return HomePage();
-          break;
 
         case 1:
-          return ChatPage();
-          break;
+          // return ChatPage();
+          return CheckoutPage();
 
         case 2:
           return WishlistPage();
-          break;
 
         case 3:
           return ProfilePage();
-          break;
 
         default:
           return HomePage();

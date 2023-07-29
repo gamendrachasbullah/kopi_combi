@@ -1,9 +1,25 @@
 import 'package:flutter/material.dart';
+import 'package:kopi_combi/dto/user.dart';
+import 'package:kopi_combi/providers/auth.dart';
 import 'package:kopi_combi/theme.dart';
+import 'package:provider/provider.dart';
 
 class EditProfilePage extends StatelessWidget {
+  final TextEditingController _nameController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _addressController = TextEditingController();
+
+  EditProfilePage({super.key});
+
   @override
   Widget build(BuildContext context) {
+    UserDTO user =
+        Provider.of<AuthProvider>(context).user ?? UserDTO(name: '', email: '');
+
+    _nameController.text = user.name;
+    _emailController.text = user.email;
+    _addressController.text = user.address ?? '';
+
     PreferredSizeWidget header() {
       return AppBar(
         leading: IconButton(
@@ -17,10 +33,22 @@ class EditProfilePage extends StatelessWidget {
         centerTitle: true,
         title: Text(
           'Edit Profile',
+          style: primaryTextStyle,
         ),
         actions: [
           IconButton(
-            onPressed: () {},
+            onPressed: () async {
+              final success =
+                  await Provider.of<AuthProvider>(context, listen: false)
+                      .updateProfil(credential: {
+                'email': _emailController.text,
+                'name': _nameController.text,
+                'address': _addressController.text,
+              });
+              if (success && context.mounted) {
+                Navigator.pop(context);
+              }
+            },
             icon: Icon(
               Icons.check,
               color: primaryColor,
@@ -39,15 +67,16 @@ class EditProfilePage extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              'Name',
+              'Username',
               style: secondaryTextStyle.copyWith(
                 fontSize: 13,
               ),
             ),
             TextFormField(
               style: primaryTextStyle,
+              controller: _nameController,
               decoration: InputDecoration(
-                  hintText: 'Alex Keinnzal',
+                  hintText: user.name,
                   hintStyle: primaryTextStyle,
                   enabledBorder: UnderlineInputBorder(
                       borderSide: BorderSide(
@@ -59,34 +88,34 @@ class EditProfilePage extends StatelessWidget {
       );
     }
 
-    Widget usernameInput() {
-      return Container(
-        margin: EdgeInsets.only(
-          top: 30,
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              'Username',
-              style: secondaryTextStyle.copyWith(
-                fontSize: 13,
-              ),
-            ),
-            TextFormField(
-              style: primaryTextStyle,
-              decoration: InputDecoration(
-                  hintText: '@alexkeinn',
-                  hintStyle: primaryTextStyle,
-                  enabledBorder: UnderlineInputBorder(
-                      borderSide: BorderSide(
-                    color: subtitleColor,
-                  ))),
-            )
-          ],
-        ),
-      );
-    }
+    // Widget usernameInput() {
+    //   return Container(
+    //     margin: EdgeInsets.only(
+    //       top: 30,
+    //     ),
+    //     child: Column(
+    //       crossAxisAlignment: CrossAxisAlignment.start,
+    //       children: [
+    //         Text(
+    //           'Username',
+    //           style: secondaryTextStyle.copyWith(
+    //             fontSize: 13,
+    //           ),
+    //         ),
+    //         TextFormField(
+    //           style: primaryTextStyle,
+    //           decoration: InputDecoration(
+    //               hintText: '@alexkeinn',
+    //               hintStyle: primaryTextStyle,
+    //               enabledBorder: UnderlineInputBorder(
+    //                   borderSide: BorderSide(
+    //                 color: subtitleColor,
+    //               ))),
+    //         )
+    //       ],
+    //     ),
+    //   );
+    // }
 
     Widget emailInput() {
       return Container(
@@ -97,15 +126,46 @@ class EditProfilePage extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              'Email Address',
+              'Email',
               style: secondaryTextStyle.copyWith(
                 fontSize: 13,
               ),
             ),
             TextFormField(
               style: primaryTextStyle,
+              controller: _emailController,
               decoration: InputDecoration(
-                  hintText: 'alexkeinn@gmail.com',
+                  hintText: user.email,
+                  hintStyle: primaryTextStyle,
+                  enabledBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(
+                    color: subtitleColor,
+                  ))),
+            )
+          ],
+        ),
+      );
+    }
+
+    Widget addressInput() {
+      return Container(
+        margin: EdgeInsets.only(
+          top: 30,
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              'Address',
+              style: secondaryTextStyle.copyWith(
+                fontSize: 13,
+              ),
+            ),
+            TextFormField(
+              style: primaryTextStyle,
+              controller: _addressController,
+              decoration: InputDecoration(
+                  hintText: user.address,
                   hintStyle: primaryTextStyle,
                   enabledBorder: UnderlineInputBorder(
                       borderSide: BorderSide(
@@ -118,6 +178,10 @@ class EditProfilePage extends StatelessWidget {
     }
 
     Widget content() {
+      String? avatarUrl = user.photoUrl ?? 'assets/image_profile.png';
+      if (avatarUrl.contains('ui-avatars.com')) {
+        avatarUrl = '$avatarUrl&size=100';
+      }
       return Container(
         width: double.infinity,
         padding: EdgeInsets.symmetric(
@@ -135,15 +199,18 @@ class EditProfilePage extends StatelessWidget {
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
                 image: DecorationImage(
-                  image: AssetImage(
-                    'assets/image_profile.png',
-                  ),
+                  image: avatarUrl != 'assets/image_profile.png'
+                      ? NetworkImage(avatarUrl)
+                      : AssetImage(
+                          'assets/image_profile.png',
+                        ) as ImageProvider,
                 ),
               ),
             ),
             nameInput(),
-            usernameInput(),
+            // usernameInput(),
             emailInput(),
+            addressInput()
           ],
         ),
       );

@@ -1,12 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:kopi_combi/theme.dart';
+import 'package:kopi_combi/widgets/image_url.dart';
 
 class ProductTile extends StatelessWidget {
+  final Map<String, dynamic> item;
+
+  const ProductTile({Key? key, required this.item}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Navigator.pushNamed(context, '/product');
+        Navigator.pushNamed(context, '/product', arguments: item['id']);
       },
       child: Container(
         margin: EdgeInsets.only(
@@ -17,14 +22,8 @@ class ProductTile extends StatelessWidget {
         child: Row(
           children: [
             ClipRRect(
-              borderRadius: BorderRadius.circular(20),
-              child: Image.asset(
-                'assets/kopi_kombi2.png',
-                width: 120,
-                height: 120,
-                fit: BoxFit.cover,
-              ),
-            ),
+                borderRadius: BorderRadius.circular(20),
+                child: ImageUrl(url: item['galleries'][0]['url'])),
             SizedBox(
               width: 12,
             ),
@@ -33,7 +32,7 @@ class ProductTile extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'Arabika',
+                  item['tags'] ?? '',
                   style: secondaryTextStyle.copyWith(
                     fontSize: 12,
                   ),
@@ -42,7 +41,7 @@ class ProductTile extends StatelessWidget {
                   height: 6,
                 ),
                 Text(
-                  'Kopi Kombi Fermentation',
+                  item['name'],
                   style: primaryTextStyle.copyWith(
                     fontSize: 16,
                     fontWeight: semibold,
@@ -52,7 +51,7 @@ class ProductTile extends StatelessWidget {
                   height: 6,
                 ),
                 Text(
-                  'Rp. 60.000',
+                  'Rp. ${item['price']}',
                   style: priceTextStyle.copyWith(
                     fontWeight: medium,
                   ),

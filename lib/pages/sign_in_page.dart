@@ -1,26 +1,17 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:kopi_combi/providers/auth.dart';
 import 'package:kopi_combi/theme.dart';
+import 'package:provider/provider.dart';
 
 class SignInPage extends StatelessWidget {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
 
-  Future<bool> doLogin(String email, String password) async {
-    try {
-      final credential = await FirebaseAuth.instance
-          .signInWithEmailAndPassword(email: email, password: password);
+  SignInPage({super.key});
 
-      return true;
-    } on FirebaseAuthException catch (e) {
-      if (e.code == 'user-not-found') {
-        print('No user found for that email.');
-      } else if (e.code == 'wrong-password') {
-        print('Wrong password provided for that user.');
-      }
-      return false;
-    }
+  void redirectHomepage(BuildContext context) {
+    Navigator.pushNamed(context, '/home');
   }
 
   @override
@@ -43,6 +34,7 @@ class SignInPage extends StatelessWidget {
             ),
             Text(
               'Sign In to Continue',
+              // 'Sign In to Continues ${authProvider.user?.email}',
               style: subtitleTextStyle,
             ),
           ],
@@ -167,10 +159,15 @@ class SignInPage extends StatelessWidget {
         child: TextButton(
           onPressed: () async {
             bool result =
-                await doLogin(_emailController.text, _passwordController.text);
+                await Provider.of<AuthProvider>(context, listen: false).signIn(
+                    credential: {
+                  'email': _emailController.text,
+                  'password': _passwordController.text
+                });
 
             if (result) {
-              Navigator.pushNamed(context, '/home');
+              // ignore: use_build_context_synchronously
+              redirectHomepage(context);
             } else {
               Fluttertoast.showToast(
                   msg: "Email atau Password anda salah",

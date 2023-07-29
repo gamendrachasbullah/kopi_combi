@@ -1,28 +1,22 @@
-import 'dart:ffi';
-
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:kopi_combi/providers/product.dart';
+import 'package:kopi_combi/service/wishlist.dart';
 import 'package:kopi_combi/theme.dart';
+import 'package:kopi_combi/widgets/image_url.dart';
+import 'package:provider/provider.dart';
 
 class ProductPage extends StatefulWidget {
+  final int productId;
+  const ProductPage({Key? key, required this.productId}) : super(key: key);
+
   @override
   State<ProductPage> createState() => _ProductPageState();
 }
 
 class _ProductPageState extends State<ProductPage> {
+  final TextEditingController _qty = TextEditingController();
   List images = [
-    'assets/kopi_kombi1.png',
-    'assets/kopi_kombi1.png',
-    'assets/kopi_kombi1.png',
-  ];
-
-  List kopiTerlaris = [
-    'assets/kopi_kombi1.png',
-    'assets/kopi_kombi1.png',
-    'assets/kopi_kombi1.png',
-    'assets/kopi_kombi1.png',
-    'assets/kopi_kombi1.png',
-    'assets/kopi_kombi1.png',
     'assets/kopi_kombi1.png',
     'assets/kopi_kombi1.png',
     'assets/kopi_kombi1.png',
@@ -31,12 +25,49 @@ class _ProductPageState extends State<ProductPage> {
   int currentIndex = 0;
   bool isWishlist = false;
 
+  late Map<String, dynamic> product = {
+    'name': '',
+    'price': 0,
+    'tags': '',
+    'description': ''
+  };
+  late List<dynamic> galleries = [];
+  late List<dynamic> popularProduct = [];
+  String imageMainUrl = '';
+  @override
+  void initState() {
+    // int productId = ModalRoute.of(context)!.settings.arguments as int; //cocok untuk stateleswidget
+    final productProvider =
+        Provider.of<ProductProvider>(context, listen: false);
+    Future.wait([
+      productProvider.getDetailProduct(widget.productId),
+      productProvider.getPopularProducts(),
+      WihslistService().productOnWishlist(widget.productId)
+    ]).then((value) {
+      final image = value[0]['galleries']
+          .firstWhere((element) => element['main_image'] == 1);
+      setState(() {
+        product = value[0];
+        galleries = value[0]['galleries'];
+        popularProduct = value[1];
+        imageMainUrl = image['url'];
+        isWishlist = value[2];
+      });
+    });
+    // callApi(widget.args["name"], widget.args["id"]);
+    super.initState();
+  }
+
+  void onHandleWishlist(int productId) async {
+    await WihslistService().addToWishlist(productId);
+  }
+
   @override
   Widget build(BuildContext context) {
     Future<void> showSuccessDialog() async {
       return showDialog(
         context: context,
-        builder: (BuildContext context) => Container(
+        builder: (BuildContext context) => SizedBox(
           width: MediaQuery.of(context).size.width - (2 * defaultMargin),
           child: AlertDialog(
             backgroundColor: backgroundColor3,
@@ -82,11 +113,13 @@ class _ProductPageState extends State<ProductPage> {
                   SizedBox(
                     height: 20,
                   ),
-                  Container(
+                  SizedBox(
                     width: 154,
                     height: 44,
                     child: TextButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.pushNamed(context, '/home', arguments: 1);
+                      },
                       style: TextButton.styleFrom(
                         backgroundColor: primaryColor,
                         shape: RoundedRectangleBorder(
@@ -133,8 +166,9 @@ class _ProductPageState extends State<ProductPage> {
         ),
         decoration: BoxDecoration(
           image: DecorationImage(
-            image: AssetImage(imageUrl),
-          ),
+              image: NetworkImage(
+                  imageUrl.replaceAll('localhost:8080', '192.168.1.17:8080')),
+              fit: BoxFit.cover),
           borderRadius: BorderRadius.circular(6),
         ),
       );
@@ -165,15 +199,12 @@ class _ProductPageState extends State<ProductPage> {
             ),
           ),
           CarouselSlider(
-            items: images
-                .map(
-                  (image) => Image.asset(
-                    image,
+            items: galleries
+                .map((image) => ImageUrl(
+                    url: image['url'],
                     width: MediaQuery.of(context).size.width,
                     height: 310,
-                    fit: BoxFit.cover,
-                  ),
-                )
+                    fit: BoxFit.cover))
                 .toList(),
             options: CarouselOptions(
               initialPage: 0,
@@ -191,7 +222,7 @@ class _ProductPageState extends State<ProductPage> {
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
-            children: images.map((e) {
+            children: galleries.map((e) {
               index++;
               return indicator(index);
             }).toList(),
@@ -228,14 +259,14 @@ class _ProductPageState extends State<ProductPage> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          'Kopi Kombi Original',
+                          product['name'],
                           style: primaryTextStyle.copyWith(
                             fontSize: 18,
                             fontWeight: semibold,
                           ),
                         ),
                         Text(
-                          'Arabika',
+                          product['tags'],
                           style: secondaryTextStyle.copyWith(
                             fontSize: 12,
                           ),
@@ -248,6 +279,8 @@ class _ProductPageState extends State<ProductPage> {
                       setState(() {
                         isWishlist = !isWishlist;
                       });
+
+                      onHandleWishlist(product['id']);
 
                       if (isWishlist) {
                         ScaffoldMessenger.of(context).showSnackBar(
@@ -303,7 +336,7 @@ class _ProductPageState extends State<ProductPage> {
                     style: primaryTextStyle,
                   ),
                   Text(
-                    'Rp. 60.0000',
+                    'Rp. ${product['price']}',
                     style: priceTextStyle.copyWith(
                       fontSize: 16,
                       fontWeight: semibold,
@@ -334,7 +367,7 @@ class _ProductPageState extends State<ProductPage> {
                     height: 12,
                   ),
                   Text(
-                    'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry',
+                    product['description'],
                     style: subtitleTextStyle.copyWith(
                       fontWeight: light,
                     ),
@@ -370,12 +403,13 @@ class _ProductPageState extends State<ProductPage> {
                   SingleChildScrollView(
                     scrollDirection: Axis.horizontal,
                     child: Row(
-                      children: kopiTerlaris.map((image) {
+                      children: popularProduct.map((item) {
                         index++;
                         return Container(
                           margin: EdgeInsets.only(
                               left: index == 0 ? defaultMargin : 0),
-                          child: kopiTerlarisCard(image),
+                          child: kopiTerlarisCard(
+                              item['product']['galleries'][0]['url']),
                         );
                       }).toList(),
                     ),
@@ -390,11 +424,34 @@ class _ProductPageState extends State<ProductPage> {
               margin: EdgeInsets.all(defaultMargin),
               child: Row(
                 children: [
+                  Container(
+                      width: 100,
+                      height: 54,
+                      margin: EdgeInsets.only(right: 5),
+                      child: TextField(
+                        keyboardType: TextInputType.number,
+                        controller: _qty,
+                        // controller: _emailController,
+                        decoration: InputDecoration(
+                            hintText: 'Qty',
+                            hintStyle: TextStyle(fontWeight: FontWeight.bold),
+                            enabledBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(12),
+                                borderSide: BorderSide(
+                                    width: 1.5, color: primaryColor))),
+                      )),
                   Expanded(
-                    child: Container(
+                    child: SizedBox(
                       height: 54,
                       child: TextButton(
                         onPressed: () {
+                          Provider.of<ProductProvider>(context, listen: false)
+                              .addToCart(
+                                  widget.productId,
+                                  product['name'],
+                                  int.parse(_qty.text),
+                                  product['price'],
+                                  imageMainUrl);
                           showSuccessDialog();
                         },
                         style: TextButton.styleFrom(
@@ -406,9 +463,9 @@ class _ProductPageState extends State<ProductPage> {
                         child: Text(
                           'Pesan Sekarang',
                           style: primaryTextStyle.copyWith(
-                            fontSize: 16,
-                            fontWeight: semibold,
-                          ),
+                              fontSize: 16,
+                              fontWeight: semibold,
+                              color: Colors.white),
                         ),
                       ),
                     ),
