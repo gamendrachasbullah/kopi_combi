@@ -76,7 +76,13 @@ class TransactionPage extends StatelessWidget {
             ],
           ),
           trailing: Text(
-            '${invoice['status']}',
+            invoice['status'] == "PENDING"
+                ? "Belum dibayar"
+                : invoice['status'] == "SHIPPING"
+                    ? "Dikemas"
+                    : invoice['status'] == "SHIPPED"
+                        ? "Dikirim"
+                        : "Diterima",
             style: primaryTextStyle.copyWith(
                 fontSize: 12.5,
                 fontWeight: FontWeight.bold,
