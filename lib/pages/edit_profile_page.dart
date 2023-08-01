@@ -8,6 +8,7 @@ class EditProfilePage extends StatelessWidget {
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _addressController = TextEditingController();
+  final TextEditingController _phoneNumberController = TextEditingController();
 
   EditProfilePage({super.key});
 
@@ -19,6 +20,7 @@ class EditProfilePage extends StatelessWidget {
     _nameController.text = user.name;
     _emailController.text = user.email;
     _addressController.text = user.address ?? '';
+    _phoneNumberController.text = user.phoneNumber ?? '';
 
     PreferredSizeWidget header() {
       return AppBar(
@@ -44,6 +46,7 @@ class EditProfilePage extends StatelessWidget {
                 'email': _emailController.text,
                 'name': _nameController.text,
                 'address': _addressController.text,
+                'phone_number': _phoneNumberController.text,
               });
               if (success && context.mounted) {
                 Navigator.pop(context);
@@ -67,7 +70,7 @@ class EditProfilePage extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              'Username',
+              'Nama Lengkap',
               style: secondaryTextStyle.copyWith(
                 fontSize: 13,
               ),
@@ -88,34 +91,35 @@ class EditProfilePage extends StatelessWidget {
       );
     }
 
-    // Widget usernameInput() {
-    //   return Container(
-    //     margin: EdgeInsets.only(
-    //       top: 30,
-    //     ),
-    //     child: Column(
-    //       crossAxisAlignment: CrossAxisAlignment.start,
-    //       children: [
-    //         Text(
-    //           'Username',
-    //           style: secondaryTextStyle.copyWith(
-    //             fontSize: 13,
-    //           ),
-    //         ),
-    //         TextFormField(
-    //           style: primaryTextStyle,
-    //           decoration: InputDecoration(
-    //               hintText: '@alexkeinn',
-    //               hintStyle: primaryTextStyle,
-    //               enabledBorder: UnderlineInputBorder(
-    //                   borderSide: BorderSide(
-    //                 color: subtitleColor,
-    //               ))),
-    //         )
-    //       ],
-    //     ),
-    //   );
-    // }
+    Widget phoneNumberInput() {
+      return Container(
+        margin: EdgeInsets.only(
+          top: 30,
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              'Nomor Telepon',
+              style: secondaryTextStyle.copyWith(
+                fontSize: 13,
+              ),
+            ),
+            TextFormField(
+              style: primaryTextStyle,
+              controller: _phoneNumberController,
+              decoration: InputDecoration(
+                  hintText: user.phoneNumber,
+                  hintStyle: primaryTextStyle,
+                  enabledBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(
+                    color: subtitleColor,
+                  ))),
+            )
+          ],
+        ),
+      );
+    }
 
     Widget emailInput() {
       return Container(
@@ -156,7 +160,7 @@ class EditProfilePage extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              'Address',
+              'Alamat',
               style: secondaryTextStyle.copyWith(
                 fontSize: 13,
               ),
@@ -208,7 +212,7 @@ class EditProfilePage extends StatelessWidget {
               ),
             ),
             nameInput(),
-            // usernameInput(),
+            phoneNumberInput(),
             emailInput(),
             addressInput()
           ],
